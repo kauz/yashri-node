@@ -2,5 +2,12 @@ extends layout
 
 block content
     h1= title
-    p Welcome to #{title}
-    p Uptime: #{uptime}
+    p Node version: #{version}
+    p Server uptime: #{uptime} ms
+    .node-memory
+        |
+        span.node-memory__title Memory usage:
+        .node-memory__list Resident set - #{memory.rss}
+            .node-memory__block.node-memory__block_htotal Heap total - #{memory.heapTotal}
+                .node-memory__block.node-memory__block_hused Heap used - #{memory.heapUsed}
+            .node-memory__block External - #{memory.external}

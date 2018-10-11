@@ -1,3 +1,26 @@
+.node-memory {
+  text-align: center;
+  list-style: none; }
+  .node-memory__title {
+    font-size: 24px; }
+  .node-memory__list {
+    list-style: none;
+    background: limegreen;
+    padding: 20px;
+    width: 40%;
+    margin: auto; }
+  .node-memory__block {
+    padding: 30px 20px; }
+    .node-memory__block_htotal {
+      background: orange;
+      margin-top: 20px; }
+    .node-memory__block_hused {
+      background: orangered;
+      margin-top: 20px; }
+    .node-memory__block:nth-child(2) {
+      background: black;
+      color: white; }
+
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
