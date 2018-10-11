@@ -6,7 +6,6 @@ let createError = require('http-errors'),
     sassMiddleware = require('node-sass-middleware');
 
 let indexRouter = require('./routes/index'),
-    usersRouter = require('./routes/users'),
     statusRouter = require('./routes/status');
     apiRouter = require('./routes/api');
 
@@ -29,7 +28,6 @@ app.use(sassMiddleware({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/status', statusRouter);
 app.use('/api', apiRouter);
 
