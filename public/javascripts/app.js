@@ -2,12 +2,13 @@ require('./surveillance');
 let Hls = require('hls.js');
 let UI = require('./UI');
 let Event = require('./Event');
+let touch = require('./TouchCtrl');
 
 let event = new Event();
 let ui = new UI();
 
 
-let App = (function (ui, event) {
+let App = (function (ui, event, touch) {
 
     let loadEventListeners = function () {
         document.addEventListener('DOMContentLoaded', event.loadEvents);
@@ -46,6 +47,7 @@ let App = (function (ui, event) {
         init: function () {
 
             loadEventListeners();
+            TouchCtrl.init();
 
             // If video container exists - init videos
             if (ui.selectors.videoContainer) {
@@ -76,7 +78,7 @@ let App = (function (ui, event) {
     }
 
 
-})(ui, event);
+})(ui, event, touch);
 
 
 App.init();

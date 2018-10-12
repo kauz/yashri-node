@@ -10,7 +10,7 @@ event.use(bodyParser.json());
 
 /* GET event listing. */
 event.get('/', (req, res, next) => {
-    let reqPath = 'data/events.json';
+    let reqPath = 'public/data/events.json';
     fs.readFile(reqPath, 'utf8', (err, data) => {
         let jsonObj = JSON.parse(data);
         if (err) {
@@ -33,7 +33,7 @@ event.get('/', (req, res, next) => {
 
 /* POST events handling */
 event.post('/', (req, res, next) => {
-    let reqPath = 'data/events.json';
+    let reqPath = 'public/data/events.json';
     fs.readFile(reqPath, 'utf8', (err, data) => {
         let jsonObj = JSON.parse(data);
         if (err) {
