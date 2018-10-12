@@ -56,7 +56,7 @@
     outline: none;
     background: $music-input-bgr;
     height: 1px;
-    &::-webkit-slider-thumb {
+    &::-webkit-slider-thumb, &::-moz-range-thumb, &::-ms-thumb {
       width: 12px;
       height: 20px;
       appearance: none;
@@ -102,7 +102,7 @@
     outline: none;
     background:$volume-input-bgr;
     height: 1px;
-    &::-webkit-slider-thumb {
+    &::-webkit-slider-thumb, &::-moz-range-thumb, &::-ms-thumb {
       appearance: none;
       border-radius: 26px;
       background: $volume-thumb;
