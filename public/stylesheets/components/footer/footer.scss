@@ -1,0 +1,23 @@
+.footer {
+  @extend %just-between,
+          %align-center,
+          %max-width,
+          %font_micro;
+  display: none;
+  @media screen and (min-width: $tablet + 1px) {
+      display: flex;
+      grid-area: f;
+      min-height: 64px;
+      bottom: 0;
+      padding: 0 $container-margin;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+  &__copyright {
+    @extend %arial;
+    @media screen and (min-width: $tablet + 1px) {
+      color: $gray-3;
+    }
+  }
+}

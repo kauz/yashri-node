@@ -1,0 +1,26 @@
+@import "music";
+
+.data {
+  &__button {
+
+  }
+  &__items {
+    &_cam {
+      @extend %flex,
+              %just-between,
+              %align-center,
+              %max-width;
+      min-height: 40px;
+      padding-top: 10px;
+    }
+  }
+  &__item {
+    @media screen and (min-width: $tablet + 1){
+      display: inline-block;
+      margin: 5px;
+    }
+  }
+  &__digit {
+    @extend %arial-bold;
+  }
+}

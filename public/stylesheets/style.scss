@@ -1,10 +1,55 @@
-@import "components/node-memory";
+@import "variables-global";
+@import "reset";
+@import "components/button/button";
+@import "components/container/container";
+@import "components/data/data";
+@import "components/event/event";
+@import "components/footer/footer";
+@import "components/header/header";
+@import "components/icon/icon";
+@import "components/logo/logo";
+@import "components/nav/nav";
+@import "components/node-memory-table/node-memory";
+@import "components/video/video";
 
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+html {
+  height: 100%;
+  box-sizing: border-box;
 }
 
-a {
-  color: #00B7FF;
+body {
+  @extend %grid;
+  height: inherit;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: 64px 1fr 64px;
+  grid-template-areas: "h"
+                       "c"
+                       "f";
+  margin: 0;
+  font-size: 16px;
+  @media screen and (max-width: $mobile-m) {
+    font-size: 14px;
+  }
+
+  @media screen and (min-width: $_4k) {
+    font-size: 25px;
+  }
+}
+
+.main {
+  grid-area: c;
+  margin-top: $header_min-height;
+  margin-bottom: $header_min-height;
+
+  &__title {
+    @extend %arial-bold,
+            %font_sbig;
+    margin-bottom: 7%;
+    text-align: center;
+    @media screen and (min-width: $tablet + 1){
+      margin-bottom: 2.1%;
+      text-align: left
+    }
+  }
 }

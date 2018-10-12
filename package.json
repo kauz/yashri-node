@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "compile": "webpack",
+    "dev": "NODE_ENV='dev' npm run compile -- --mode='development' && nodemon ./bin/www",
+    "build": "NODE_ENV='production' npm compile -- --mode='production'",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -10,9 +13,17 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
+    "hls.js": "^0.11.0",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
     "node-sass-middleware": "0.11.0",
     "pug": "2.0.0-beta11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-loader": "^8.0.4",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
   }
 }

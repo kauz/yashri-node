@@ -1,0 +1,120 @@
+.music {
+  @extend %grid;
+  height: 100%;
+  grid-gap: 10px;
+  grid-auto-rows: 21.5px;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(10, 1fr);
+
+  &__albumcover {
+    @extend %max-width;
+    min-width: 53px;
+    min-height: 53px;
+    grid-row: span 1;
+    grid-column: span 1;
+    border-radius: 10px;
+  }
+
+  &__track {
+    @extend %grid;
+    grid-row: span 1;
+    grid-column: span 9;
+  }
+
+  &__nav {
+    @extend %grid;
+    grid-gap: 0 6px;
+    grid-row: span 1;
+    grid-column: span 10;
+    grid-template-columns: repeat(10, 1fr);
+  }
+}
+
+
+
+.track {
+  @extend .music__track;
+
+  &__description {
+    grid-column: span 1;
+  }
+  &__length {
+    @extend %font_small;
+    margin-left: 15px;
+    color: $music-info;
+    opacity: .84;
+  }
+  &__body {
+    @extend %flex,
+    %align-center,
+    %just-between;
+    grid-column: span 1;
+  }
+  &__input {
+    @extend %max-width;
+    appearance: none;
+    outline: none;
+    background: $music-input-bgr;
+    height: 1px;
+    &::-webkit-slider-thumb {
+      width: 12px;
+      height: 20px;
+      appearance: none;
+      border-radius: 4.5px;
+      background: $music-thumb;
+    }
+  }
+}
+
+
+
+.m-nav {
+  @extend .music__nav;
+
+  &__prev, &__next {
+    grid-column: span 1;
+    min-width: 60px;
+    outline: none;
+    border: none;
+    padding: 0;
+    background: url("../images/Prev.svg") center no-repeat;
+    cursor: pointer;
+    transition: filter ease .5s;
+    &:hover {
+      filter: opacity(80%);
+    }
+    &:active {
+      filter: brightness(80%);
+    }
+  }
+  &__next {
+    transform: rotate(180deg);
+  }
+  &__volume {
+    @extend %flex,
+            %align-center,
+            %just-between;
+    grid-column: span 8;
+  }
+  &__volume-input {
+    @extend %max-width;
+    appearance: none;
+    outline: none;
+    background:$volume-input-bgr;
+    height: 1px;
+    &::-webkit-slider-thumb {
+      appearance: none;
+      border-radius: 26px;
+      background: $volume-thumb;
+      width: 16px;
+      height: 16px;
+    }
+  }
+  &__value {
+    @extend %font_small;
+    margin-left: 15px;
+    color: $music-info;
+    opacity: .84;
+  }
+
+}

@@ -7,7 +7,8 @@ let createError = require('http-errors'),
 
 
 let indexRouter = require('./routes/index'),
-    statusRouter = require('./routes/status');
+    statusRouter = require('./routes/status'),
+    cctvRouter = require('./routes/cctv'),
     apiRouter = require('./routes/api');
 
 let app = express();
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/status', statusRouter);
+app.use('/cctv', cctvRouter);
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler

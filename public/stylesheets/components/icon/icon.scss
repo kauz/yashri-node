@@ -1,0 +1,22 @@
+@import "variables";
+
+.event__icon {
+  display: block;
+  min-width: 48px;
+  height: 48px;
+  background: 100% center no-repeat;
+  margin-right: 10px;
+}
+
+
+.icon__stats { background-image: url("../images/icons/stats.svg") };
+.icon__key { background-image: url("../images/icons/key.svg") };
+.icon__robot-cleaner { background-image: url("../images/icons/robot-cleaner.svg") };
+.icon__router { background-image: url("../images/icons/router.svg") };
+.icon__thermal { background-image: url("../images/icons/thermal.svg") };
+.icon__ac { background-image: url("../images/icons/ac-white.svg") };
+.icon__music { background-image: url("../images/icons/music.svg") };
+.icon__fridge { background-image: url("../images/icons/fridge.svg") };
+.icon__battery { background-image: url("../images/icons/battery.svg") };
+.icon__cam { background-image: url("../images/icons/cam-white.svg") };
+.icon__kettle { background-image: url("../images/icons/kettle.svg") };

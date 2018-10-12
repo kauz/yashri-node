@@ -1,0 +1,203 @@
+@import "variables";
+
+.events {
+  @extend %grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 17px 1.4%;
+  grid-auto-flow: row dense;
+  
+  @media screen and (min-width: $laptop){
+    grid-template-columns: repeat(6, 1fr);
+  }
+  @media screen and (min-width: $laptop-l){
+    grid-auto-rows: unset;
+  }
+}
+
+.event {
+  @extend %flex,
+          %flex-column,
+          %just-between,
+          %arial,
+          %posr;
+  grid-row: span 1;
+  border-radius: 20px;
+
+  &__hide, &__go {
+    @extend %posa;
+    content: '';
+    display: none;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    padding: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  &__hide {
+    top: 0;
+    background: url("../images/cross.svg") center no-repeat;
+  }
+
+
+  &__go {
+    bottom: 0;
+    background: url("../images/shape.svg") center no-repeat;
+  }
+
+  &:hover {
+    background: $gray-event;
+    box-shadow: 0 2px 6px 0 rgba(197,186,186,0.50);
+    .event__body {background-color: $gray-event;}
+    .event__hide, .event__go  {
+      display: block;
+    }
+}
+
+  &_type_info {
+    background-color: $white-event;
+  }
+
+  &_type_critical {
+    .event__body {
+      border-top-right-radius: 20px;
+      border-top-left-radius: 20px;
+      margin-top: -15px;
+    }
+    .event__heading, .event__status { color: $white-event; background: $critical; }
+    .event__source, .event__time { color: inherit }
+    .event__hide { filter: brightness(3)}
+  }
+
+  &_size_s {
+    grid-row: span 1;
+    grid-column: span 1;
+    @media screen and (min-width: $laptop){
+      grid-column: span 2;
+    }
+    .event__source, .event__time {
+      display: block;
+      float: none;
+      margin: 10px 0;
+    }
+  }
+
+  &_size_m {
+    grid-row: span 2;
+    grid-column: span 1;
+    @media screen and (min-width: $laptop){
+      grid-column: span 3;
+    }
+    .event__body {
+      @extend %font_ubig;
+    }
+  }
+
+  &_size_l {
+    grid-row: span 3;
+    grid-column: span 1;
+    @media screen and (min-width: $laptop){
+      grid-column: span 4;
+    }
+    .event__body {
+      @extend %font_ubig;
+    }
+  }
+
+  &__heading {
+    @extend %flex,
+            %align-center;
+    flex-wrap: nowrap;
+    padding: ($event-padding+15px) ($event-padding+5px) ($event-pr-pad+5%);
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    @media screen and (min-width: $mobile-m + 1){
+      padding: $event-padding $event-padding $event-pr-pad;
+    }
+  }
+  &__title {
+    @extend %arial-bold,
+            %font_ubig;
+  }
+  &__status {
+    padding: ($event-padding+15px) ($event-padding+5px) ($event-pr-pad+10%);
+    @media screen and (min-width: $mobile-l + 1){
+      padding: ($event-padding+15px) ($event-padding+5px) ($event-pr-pad+5%);
+    }
+    @media screen and (min-width: $tablet + 1){
+      padding: $event-padding $event-padding $event-pr-pad;
+    }
+  }
+  &__source {
+    @extend %arial,
+            %font_middle;
+    @media screen and (min-width: $tablet + 1){
+      display: inline-block;
+    }
+    color: $black-2;
+  }
+  &__time {
+    @extend %arial,
+            %font_middle;
+    @media screen and (min-width: $tablet + 1){
+      display: inline-block;
+      float: right;
+    }
+    color: $black-2;
+  }
+  &__body {
+    @extend %flex,
+            %align-end,
+            %arial,
+            %font_smiddle;
+    background: $white-event;
+    padding: ($event-padding+15px) ($event-padding+5px) ($event-pr-pad+10%);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    flex-grow: 3;
+    @media screen and (min-width: $mobile-l + 1){
+      padding: ($event-padding+15px) ($event-padding+5px) ($event-pr-pad+5%);
+    }
+    @media screen and (min-width: $tablet + 1){
+      padding: $event-padding $event-padding $event-pr-pad;
+    }
+    @media screen and (min-width: $laptop-l + 1){
+      padding: ($event-padding+20) $event-padding $event-pr-pad;
+    }
+  }
+  &__data {
+    padding: $event-padding;
+    flex-grow: 2;
+    @extend %flex, %flex-row, %font_middle;
+    @media screen and (min-width: $laptop-l){
+      align-items: flex-end;
+    }
+  }
+  &__img {
+    width: 100%;
+    height: 100%;
+    @media screen and (min-width: $laptop-l){
+      height: auto;
+    }
+    border-radius: 20px;
+  }
+}
+
+
+
+
+.data {
+  &__button {
+
+  }
+  &__item {
+    @media screen and (min-width: $tablet + 1){
+      display: inline-block;
+      margin: 5px;
+    }
+  }
+  &__digit {
+    @extend %arial-bold;
+  }
+}

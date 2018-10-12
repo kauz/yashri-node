@@ -1,0 +1,19 @@
+@import "variables";
+
+.header {
+  @extend %flex,
+          %align-center;
+  grid-area: h;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 0 $container-margin;
+  min-height: $header_min-height;
+  top: 0;
+  background: $header_background;
+  box-shadow: 0 1px 0 0 $header_border-color;
+  z-index: 2;
+  // Temporary fix for mobile burger float to right
+  @media screen and (max-width: $mobile-l){
+    justify-content: space-between;
+  }
+}

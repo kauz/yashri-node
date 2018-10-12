@@ -1,0 +1,35 @@
+.button {
+  @extend %posr,
+          %arial-bold,
+          %font_small;
+  width: 132px;
+  height: 54px;
+  border-radius: 8px;
+  background-color: $gray-button;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  &:after {
+    content: "";
+    display: block;
+    border-radius: inherit;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0);
+    transition: background .3s;
+    top: 0;
+    left: 0;
+    position: absolute;
+  }
+  &:hover:after {
+    background: rgba(255,255,255,.2);
+  }
+
+  &:active:after {
+    background: rgba(0,0,0,.1);
+  }
+
+  &_primary {
+    background-color: $primary;
+  }
+}

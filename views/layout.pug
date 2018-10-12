@@ -7,6 +7,40 @@ html(lang='en')
         meta(name='robots', content='noindex')
         title= title
         link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='icon', href='favicon.ico', type='image/x-icon')
+
     body
-        block content
+        header.header
+            img.logo(src='/images/logo.svg', title='Логотип Яндекс.Дом', alt='Логотип Яндекс.Дом')
+            nav.nav.nav_bold
+                ul.nav__list
+                    li.nav__item
+                        a.nav__link(href='/') Сводка
+                    li.nav__item
+                        a.nav__link(href='#') Устройства
+                    li.nav__item
+                        a.nav__link(href='#') Сценарии
+                    li.nav__item
+                        a.nav__link(href='/cctv') Видеонаблюдение
+                .hamburger
+
+
+        .main
+            .container
+                block content
+
+        footer.footer
+            nav.nav.nav_footer
+                ui.nav__list
+                    li.nav__item
+                        a.nav__link(href='#') Помощь
+                    li.nav__item
+                        a.nav__link(href='#') Обратная связь
+                    li.nav__item
+                        a.nav__link(href='/api') Разработчикам
+                    li.nav__item
+                        a.nav__link(href='#') Условия использования
+                    li.nav__item
+                        a.nav__link(href='https://wiki.yandex.ru/shri-2018-II/homework/Adaptivnaja-vjorstka/.files/license.pdf') Авторские права
+            .footer__copyright © 2001–2017 ООО «Яндекс»
         script(src='/javascripts/main.js')

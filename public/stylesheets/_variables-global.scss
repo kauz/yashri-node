@@ -1,0 +1,40 @@
+@import "partials/colors";
+@import "partials/fonts";
+@import "partials/mixins";
+@import "partials/sizes";
+
+
+// Flexbox
+%flex {display: flex}
+%i-flex {display: inline-flex}
+%flex-row {flex-flow: row wrap}
+%flex-column {flex-flow: column nowrap}
+%align-center {align-items: center}
+%align-end {align-items: flex-end}
+%just-start {justify-content: flex-start}
+%just-center {justify-content: center}
+%just-between {justify-content: space-between}
+%grow {flex-grow: 1}
+
+
+// Grid
+%grid {display: grid}
+
+
+// Size
+%max-width {width: 100%}
+
+
+// Position
+%margin-center {margin: 0 auto}
+%posa {position: absolute}
+%posr {position: relative}
+%posf {position: fixed}
+
+// Fonts
+%bold {font-weight: bold}
+%arial {font-family: $main-font;}
+%arial-bold {font-family: $main-font_bold; font-weight: bold}
+
+
+$container-margin: 2.9%;
