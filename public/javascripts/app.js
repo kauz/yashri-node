@@ -1,17 +1,15 @@
 require('./surveillance');
 let Hls = require('hls.js');
 let UI = require('./UI');
-let Event = require('./Event');
 let touch = require('./TouchCtrl');
 
-let event = new Event();
 let ui = new UI();
 
 
-let App = (function (ui, event, touch) {
+let App = (function (ui, TouchCtrl) {
 
     let loadEventListeners = function () {
-        document.addEventListener('DOMContentLoaded', event.loadEvents);
+        // document.addEventListener('DOMContentLoaded', event.loadEvents);
     };
 
     // Check for hls and start video
@@ -78,7 +76,7 @@ let App = (function (ui, event, touch) {
     }
 
 
-})(ui, event, touch);
+})(ui, touch);
 
 
 App.init();

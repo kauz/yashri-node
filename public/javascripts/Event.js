@@ -34,7 +34,7 @@ module.exports = class Event {
                                     ${event.data !== undefined ? `<div class="event__data">` : ``}
                                         
                                         ${event.data !== undefined && event.data.image !== undefined ? `<img 
-                                            srcset="/images/${event.data.image} 408w, /images/${event.data.image.replace(/\.jpg$/, '@2x.jpg')} 1664w, /images/${event.data.image.replace(/\\.jpg$/, '@3x.jpg')} 2496w"
+                                            srcset="/images/${event.data.image} 408w, /images/${event.data.image.replace(/\.jpg$/, '@2x.jpg')} 1664w, /images/${event.data.image.replace(/\.jpg$/, '@3x.jpg')} 2496w"
                                             sizes="(max-width: 768px) 408px,
                                                    (max-width: 2560px) 1664px,
                                                     2496px"
@@ -80,10 +80,6 @@ module.exports = class Event {
                 output += '<li>Something went wrong</li>'
             }
 
-            let container = document.querySelector('.events');
-            if (container) {
-                container.innerHTML = output;
-            }
 
         };
 

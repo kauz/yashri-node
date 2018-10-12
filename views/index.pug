@@ -3,3 +3,5 @@ extends layout
 block content
   h1.main__title= title
   .events
+      each event in data.events
+          include components/event

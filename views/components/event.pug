@@ -1,0 +1,53 @@
+.event(class=`event_type_${event.type} event_size_${event.size}`)
+    i.event__hide
+    .event__heading
+        i.event__icon(class=`icon__${event.icon}`)
+        p.event__title= event.title
+    .event__status
+        .event__source= event.source
+        .event__time= event.time
+    if event.description
+        .event__body= event.description
+        if event.data
+            .event__data
+                if event.data.image
+                    img.data__img.event__img(srcset=`/images/${event.data.image} 408w` + ', ' + `/images/${event.data.image.replace(/\.jpg$/, "@2x.jpg")} 1664w` + ', ' + `/images/${event.data.image.replace(/\.jpg$/, "@3x.jpg")} 2496w` sizes='(max - width: 768px) 408px, (max-width: 2560px) 1664px, 2496px' src=`/images/${event.data.image}`, alt=`${event.title}`)
+                if event.icon === 'cam'
+                    .data__items.data__items_cam
+                        p.data__item
+                            | Приближение:
+                            span.data__digit 100%
+                        p.data__item
+                            | Яркость:
+                            span.data__digit 100%
+                if event.data.type === 'graph'
+                    img.data__img.event__img(src='/images/graph.svg', alt=`${event.title}`)
+                if event.data.albumcover
+                    .music.data__music
+                        img.data__img.music__albumcover(src=`${event.data.albumcover}`, alt='albumcover')
+                        .music__track.track
+                            .track__description= event.data.artist + ' - '  + event.data.track.name
+                            .track__body
+                                input.track__input(type='range', min='0', max='24000', step='1', value='0')
+                                .track__length= event.data.track.length
+                        .music__nav.m-nav
+                            button.m-nav__prev
+                            button.m-nav__next
+                            .m-nav__volume
+                                input.m-nav__volume-input(type='range', min='0', max='100', step='1', value=`${event.data.volume}`)
+                                .m-nav__value= event.data.volume + '%'
+                if event.data.humidity
+                    .data__items
+                        p.data__item Температура:
+                            |
+                            |
+                            span.data__digit= event.data.temperature + '℃'
+                        p.data__item Влажность:
+                            |
+                            |
+                            span.data__digit= event.data.humidity + '%'
+                if event.data.buttons
+                    .data__buttons
+                        button.data__button.button.button_primary= event.data.buttons[0]
+                        button.data__button.button= event.data.buttons[1]
+    i.event__go
