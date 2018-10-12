@@ -3,7 +3,7 @@ module.exports = class Event {
     loadEvents() {
         let xhr = new XMLHttpRequest();
 
-        xhr.open('GET', `/data/events.json`, true);
+        xhr.open('GET', `/api/events`, true);
 
         xhr.onload = function() {
 
