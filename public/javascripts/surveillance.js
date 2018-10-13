@@ -10,7 +10,6 @@ if (document.querySelector(ui.selectors.videoContainer)) {
     for (let i = 0; i < canvases.length; i++) {
         canvases[i] = document.getElementById(`canvas-${i}`);
     }
-
     for (let i = 0; i < videos.length; i++) {
         videos[i] = new Video(`/assets/${i}.mp4`);
     }
@@ -21,28 +20,23 @@ if (document.querySelector(ui.selectors.videoContainer)) {
             video: video.video,
             ready: false,
         };
-
         let canvas = canvases[i];
         let ctx = canvas.getContext('2d');
 
-// To handle errors. This is not part of the example at the moment. Just fixing for Edge that did not like the ogv format video
-        video.onerror = function (e) {
-            //document.body.removeChild(canvas);
+        video.onerror = function () {
+            document.body.removeChild(canvas);
             document.body.innerHTML += "<h2>There is a problem loading the video</h2><br>";
         };
 
-        videoContainer.video.oncanplay = readyToPlayVideo; // set the event to the play function that
-// can be found below
-        function readyToPlayVideo(e) { // this is a referance to the video
-            // the video may not match the canvas size so find a scale to fit
+        videoContainer.video.oncanplay = readyToPlayVideo;
+        function readyToPlayVideo() {
+            // find a scale to fit canvas size
             videoContainer.scale = Math.min(
                 canvas.width / this.videoWidth,
                 canvas.height / this.videoHeight);
             videoContainer.ready = true;
             // the video can be played so hand it off to the display function
             requestAnimationFrame(updateCanvas);
-            // playPauseClick(e);
-            // document.querySelector(".mute").textContent = "Mute";
         }
 
         function updateCanvas() {
@@ -55,73 +49,73 @@ if (document.querySelector(ui.selectors.videoContainer)) {
                 let vidW = videoContainer.video.videoWidth;
                 let top = canvas.height / 2 - (vidH / 2) * scale;
                 let left = canvas.width / 2 - (vidW / 2) * scale;
-                // now just draw the video the correct size
+                // draw the video the correct size
                 ctx.drawImage(videoContainer.video, left, top, vidW * scale, vidH * scale);
-/*                if (videoContainer.video.paused) { // if not playing show the paused screen
-                    drawPlayIcon();
-                }*/
             }
-            // all done for display
             // request the next frame in 1/60th of a second
             requestAnimationFrame(updateCanvas);
         }
 
-/*        function drawPlayIcon() {
-            ctx.fillStyle = "black";  // darken display
-            ctx.globalAlpha = 0.5;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#fff"; // colour of play icon
-            ctx.globalAlpha = 0.75; // partly transparent
-            ctx.beginPath(); // create the path for the icon
-            let size = (canvas.height / 2) * 0.5;  // the size of the icon
-            ctx.moveTo(canvas.width / 2 + size / 2, canvas.height / 2); // start at the pointy end
-            ctx.lineTo(canvas.width / 2 - size / 2, canvas.height / 2 + size);
-            ctx.lineTo(canvas.width / 2 - size / 2, canvas.height / 2 - size);
-            ctx.closePath();
-            ctx.fill();
-            ctx.globalAlpha = 1; // restore alpha
-        }*/
-
-/*        function playPauseClick(e) {
-            if (e.target.id === canvas.id || e.type === "DOMContentLoaded") {
-                if (videoContainer !== undefined && videoContainer.ready) {
-                    if (videoContainer.video.paused) {
-                        videoContainer.video.play();
-                    } else {
-                        videoContainer.video.pause();
-                    }
-                }
-            }
-        }*/
-
         function fullScreenVideo(e) {
             if (e.target.id === canvas.id) {
                 if (videoContainer !== undefined && videoContainer.ready) {
-                    if (canvas.requestFullscreen) {
-                        canvas.requestFullscreen();
-                    } else if (canvas.mozRequestFullScreen) {
-                        canvas.mozRequestFullScreen();
-                    } else if (canvas.webkitRequestFullscreen) {
-                        canvas.webkitRequestFullscreen();
+                    let children = e.target.parentElement.children;
+                    if (e.target.classList.contains('canvas_fullscreen')) {
+                        for (let i = 0; i < children.length; i++) {
+                            if(children[i].classList.contains('canvas_hidden'))
+                                children[i].classList.remove('canvas_hidden');
+                        }
+                        toggleMute();
+                        e.target.classList.remove('canvas_fullscreen');
+                        e.target.style.filter = `brightness(1) contrast(1)`;
+                        document.querySelector('.video__controls').classList.add('video__controls_hidden');
+                    } else {
+                        toggleMute();
+                        for (let i = 0; i < children.length; i++) {
+                            if(children[i].classList.contains('canvas'))
+                                children[i].classList.add('canvas_hidden');
+                        }
+                        e.target.classList.remove('canvas_hidden');
+                        e.target.classList.add('canvas_fullscreen');
+                        document.querySelector('.video__controls').classList.remove('video__controls_hidden');
                     }
                 }
             }
         }
 
-        function videoMute() {
-            video.video.muted = !video.video.muted;
-            if (video.video.muted) {
-                document.querySelector(".mute").textContent = "Mute";
-            } else {
-                document.querySelector(".mute").textContent = "Sound on";
+        function filterCanvas(e) {
+            let brightness = 1;
+            let contrast = 1;
+            let value = e.target.value;
+            let canvas = document.querySelector('.canvas_fullscreen');
+            if (!canvas.style.filter) {
+                canvas.style.filter = `brightness(${brightness}) contrast(${contrast})`;
+            }
+            if (canvas) {
+                if (e.target.classList.contains('video__input_brightness')) {
+                    let reg = /contrast\([0-9]?\)/;
+                    let filter = canvas.getAttribute('style');
+                    let contrast = filter.match(reg)[0];
+                    canvas.style.filter = `brightness(${value}) ${contrast}`;
+                }
+                else if (e.target.classList.contains('video__input_contrast')) {
+                    let reg = /brightness\([0-9]?\)/;
+                    let filter = canvas.getAttribute('style');
+                    let brightness = filter.match(reg)[0];
+                    canvas.style.filter = `${brightness} contrast(${value})`;
+                }
             }
         }
 
-// register the event
+        function toggleMute() {
+                video.video.muted = !video.video.muted;
+        }
+
+
         document.addEventListener('DOMContentLoaded', videoContainer.video.play());
-        // document.querySelector(ui.selectors.videoContainer).addEventListener('click', playPauseClick);
+        document.querySelector('.video__input_brightness').addEventListener('mouseup', filterCanvas);
+        document.querySelector('.video__input_contrast').addEventListener('mouseup', filterCanvas);
         document.querySelector(ui.selectors.videoContainer).addEventListener('click', fullScreenVideo);
-        //document.querySelector(".mute").addEventListener("click",videoMute);
 
     });
 

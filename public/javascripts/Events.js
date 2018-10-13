@@ -1,4 +1,4 @@
-module.exports = class Event {
+module.exports = class Events {
 
     loadEvents() {
         let xhr = new XMLHttpRequest();

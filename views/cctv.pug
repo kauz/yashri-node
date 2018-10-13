@@ -7,3 +7,8 @@ block content
         canvas#canvas-1.canvas
         canvas#canvas-2.canvas
         canvas#canvas-3.canvas
+        .video__controls.video__controls_hidden
+            label.video__control Яркость
+                input.video__input.video__input_brightness(type='range' value=1 min=1 max=4 step=1)
+            label.video__control Контрасность
+                input.video__input.video__input_contrast(type='range' value=1 min=1 max=4 step=1)

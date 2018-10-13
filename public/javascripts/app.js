@@ -29,28 +29,28 @@ let App = (function (ui, TouchCtrl) {
         }
     };
 
-    function loop() {
+/*    function loop() {
         let canvas = document.getElementById('canvas-for-video');
         let video = document.getElementById('video-for-canvas');
-
         let ctx = canvas.getContext('2d');
 
         ctx.drawImage(video, 0, 0);
-
         requestAnimationFrame(loop);
-    }
+    }*/
 
 
     return {
         init: function () {
-
+            let touchImg = document.querySelector('.event__img');
             loadEventListeners();
-            TouchCtrl.init();
+            if (touchImg) {
+                TouchCtrl.init(touchImg);
+            }
 
-            // If video container exists - init videos
-            if (ui.selectors.videoContainer) {
+/*            // If video container exists - init videos
+            if (document.querySelector(ui.selectors.videoContainer)) {
 
-                /*                initVideo(
+                                initVideo(
                                     document.getElementById('video-1'),
                                     'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fsosed%2Fmaster.m3u8'
                                 );
@@ -65,11 +65,9 @@ let App = (function (ui, TouchCtrl) {
                                 initVideo(
                                     document.getElementById('video-4'),
                                     'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fhall%2Fmaster.m3u8'
-                                );*/
-
-                //loop();
-
-            }
+                                );
+                loop();
+            }*/
 
 
         }

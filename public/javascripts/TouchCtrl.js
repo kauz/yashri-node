@@ -9,7 +9,7 @@ module.exports = (function() {
     let tx = 0;
     let scale = 1;
 
-    let pointerdown_handler = function (ev) {
+    let pointerdownHandler = function (ev) {
         // console.log('down', ev)
         // The pointerdown event signals the start of a touch interaction.
         // This event is cached to support 2-finger gestures
@@ -21,7 +21,7 @@ module.exports = (function() {
         ev.preventDefault();
     };
 
-    let pointermove_handler = function (ev) {
+    let pointermoveHandler = function (ev) {
         // console.log('move', ev);
         // console.log(evCachePDown[0]);
         let diffScale = 0;
@@ -78,8 +78,8 @@ module.exports = (function() {
     };
 
 
-    let pointerup_handler = function(ev) {
-        remove_event(ev);
+    let pointerupHandler = function(ev) {
+        removeEvent(ev);
 
 
         // If the number of pointers down is less than two then reset diff tracker
@@ -88,7 +88,7 @@ module.exports = (function() {
     };
 
 
-    function remove_event(ev) {
+    function removeEvent(ev) {
         // Remove this event from the target's cache
         for (var i = 0; i < evCache.length; i++) {
             if (evCache[i].pointerId === ev.pointerId) {
@@ -120,20 +120,19 @@ module.exports = (function() {
             ev.preventDefault();
         },
 
-        init: function() {
+        init: function(el) {
 
             //if (ev.target.classList.contains('cam__img') && ev.pointerType === 'touch') {
-                let el = document.querySelector('.cam__img');
                 // Install event handlers for the pointer target
-                el.onpointerdown = pointerdown_handler;
-                el.onpointermove = pointermove_handler;
+                el.onpointerdown = pointerdownHandler;
+                el.onpointermove = pointermoveHandler;
 
                 // Use same handler for pointer{up,cancel,out,leave} events since
                 // the semantics for these events - in this app - are the same.
-                el.onpointerup = pointerup_handler;
-                el.onpointercancel = pointerup_handler;
-                el.onpointerout = pointerup_handler;
-                el.onpointerleave = pointerup_handler;
+                el.onpointerup = pointerupHandler;
+                el.onpointercancel = pointerupHandler;
+                el.onpointerout = pointerupHandler;
+                el.onpointerleave = pointerupHandler;
             //}
 
         }
