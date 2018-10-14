@@ -33,7 +33,7 @@ module.exports = (function () {
                 document.querySelector('.video__controls').classList.add('video__controls_hidden');
             } else {
                 toggleMute(e.target);
-                audioAnalyzer.analyze(e.target);
+                audioAnalyzer.visualize(e.target);
                 for (let i = 0; i < children.length; i++) {
                     if (children[i].classList.contains('video'))
                         children[i].classList.add('video_hidden');
