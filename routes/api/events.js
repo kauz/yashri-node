@@ -4,6 +4,7 @@ let express = require('express'),
     createError = require('http-errors'),
     bodyParser = require("body-parser"),
     filter = require('../../middleware/filterObject');
+    paginate = require('../../middleware/paginateObject');
 
 event.use(bodyParser.urlencoded({ extended: false }));
 event.use(bodyParser.json());
@@ -18,9 +19,11 @@ event.get('/', (req, res, next) => {
         }
         else {
             if (req.query.type === 'info' || req.query.type === 'critical') {
-                let events = filter(jsonObj.events, req.query.type);
-                events = {events};
-                res.json(events);
+                let events = filter(jsonObj.events, req.query.type),
+                    offset = parseInt(req.query.offset, 10),
+                    limit = parseInt(req.query.limit, 10);
+                // events = {events};
+                offset && limit !== undefined ? res.json(paginate(events, offset, limit)) : res.json({events});
             } else if (req.query.type !== undefined && req.query.type.match(/^\w+$/)) {
                 next(createError(400));
             }
