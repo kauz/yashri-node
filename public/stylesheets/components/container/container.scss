@@ -10,18 +10,28 @@
   }
 
   &_video {
-    @extend %posr,
-            %max-width,
-            %grid;
+    @extend %max-width;
     height: 100%;
-    grid-template-columns: repeat(2, 50%);
-    grid-auto-rows: 150px;
     padding: 0;
-    @media screen and (min-width: $mobile-l + 1) {
-      grid-auto-rows: 250px;
-    }
-    @media screen and (min-width: $laptop + 1) {
-      grid-auto-rows: 400px;
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    &__item {
+      width: calc(50% - 10px);
+      transition: width 0.7s ease 0.2s, visibility 0.1s, opacity 0.1s, height 1s linear 1s;
+      display: inline-block;
+      margin: 10px;
+      transform-origin: center center;
+      box-sizing: border-box;
+      &_hidden {
+        visibility: hidden;
+        opacity: 0;
+        height: 0;
+      }
+      &_fullscreen {
+        width: 100%;
+        transform: translateZ(0);
+      }
     }
   }
 }

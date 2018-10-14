@@ -21,25 +21,27 @@ module.exports = (function () {
     }
 
     function fullScreenVideo(e) {
-            let children = e.target.parentElement.children;
+            let children = document.querySelector('.container_video').children;
             if (e.target.classList.contains('video_fullscreen')) {
                 for (let i = 0; i < children.length; i++) {
-                    if (children[i].classList.contains('video_hidden'))
-                        children[i].classList.remove('video_hidden');
+                    if (children[i].classList.contains('container_video__item_hidden'))
+                        children[i].classList.remove('container_video__item_hidden');
                 }
                 toggleMute(e.target);
                 e.target.classList.remove('video_fullscreen');
+                e.target.parentElement.classList.remove('container_video__item_fullscreen');
                 e.target.style.filter = `brightness(1) contrast(1)`;
                 document.querySelector('.video__controls').classList.add('video__controls_hidden');
             } else {
                 toggleMute(e.target);
                 audioAnalyzer.visualize(e.target);
                 for (let i = 0; i < children.length; i++) {
-                    if (children[i].classList.contains('video'))
-                        children[i].classList.add('video_hidden');
+                    if (children[i].classList.contains('container_video__item'))
+                        children[i].classList.add('container_video__item_hidden');
                 }
-                e.target.classList.remove('video_hidden');
+                e.target.parentElement.classList.remove('container_video__item_hidden');
                 e.target.classList.add('video_fullscreen');
+                e.target.parentElement.classList.add('container_video__item_fullscreen');
                 document.querySelector('.video__controls').classList.remove('video__controls_hidden');
             }
     }

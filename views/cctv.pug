@@ -3,15 +3,19 @@ extends layout
 block content
     h1.main__title= title
     .container.container_video
-        video#video-0.video(loop=true, muted=true, controls=false, autoplay=true)
-        video#video-1.video(loop=true, muted=true, controls=false, autoplay=true)
-        video#video-2.video(loop=true, muted=true, controls=false, autoplay=true)
-        video#video-3.video(loop=true, muted=true, controls=false, autoplay=true)
-        .video__controls.video__controls_hidden
-            label.video__control Яркость
-                input.video__input.video__input_brightness(type='range' value=1 min=1 max=4 step=1)
-            label.video__control Контрасность
-                input.video__input.video__input_contrast(type='range' value=1 min=1 max=4 step=1)
-            label.video__control
-                button.video__button.video__button_efs Все камеры
-            canvas.video__analyzer
+        div.container_video__item
+            video#video-0.video(loop=true, muted=true, controls=false, autoplay=true)
+        div.container_video__item
+            video#video-1.video(loop=true, muted=true, controls=false, autoplay=true)
+        div.container_video__item
+            video#video-2.video(loop=true, muted=true, controls=false, autoplay=true)
+        div.container_video__item
+            video#video-3.video(loop=true, muted=true, controls=false, autoplay=true)
+    .video__controls.video__controls_hidden
+        label.video__control Яркость
+            input.video__input.video__input_brightness(type='range' value=1 min=1 max=4 step=1)
+        label.video__control Контрасность
+            input.video__input.video__input_contrast(type='range' value=1 min=1 max=4 step=1)
+        label.video__control
+            button.video__button.video__button_efs Все камеры
+        canvas.video__analyzer
