@@ -49,12 +49,13 @@ module.exports = (function () {
     function exitFullScreenVideo() {
         let fscv = document.querySelector('.video_fullscreen');
         if (fscv) {
-            let children = fscv.parentElement.children;
+            let children = document.querySelector('.container_video').children;
             for (let i = 0; i < children.length; i++) {
-                if (children[i].classList.contains('video_hidden'))
-                    children[i].classList.remove('video_hidden');
+                if (children[i].classList.contains('container_video__item_hidden'))
+                    children[i].classList.remove('container_video__item_hidden');
             }
             fscv.classList.remove('video_fullscreen');
+            fscv.parentElement.classList.remove('container_video__item_fullscreen');
             toggleMute(fscv);
             document.querySelector('.video__controls').classList.add('video__controls_hidden');
         }
