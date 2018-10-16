@@ -10,28 +10,36 @@
   }
 
   &_video {
-    @extend %max-width;
+    @extend %grid,
+            %max-width;
+    grid-template-columns: repeat(4, 1fr);
+    //grid-auto-rows: 400px;
     height: 100%;
     padding: 0;
-    display: block;
     overflow: hidden;
     text-align: center;
     &__item {
-      width: calc(50% - 10px);
-      transition: width 0.7s ease 0.2s, visibility 0.1s, opacity 0.1s, height 1s linear 1s;
+      grid-row: span 1;
+      grid-column: span 2;
+      //width: calc(50% - 10px);
+      transition: transform 1s ease, filter .3s ease-in-out, opacity .2s linear;
       display: inline-block;
       margin: 10px;
       transform-origin: center center;
       box-sizing: border-box;
+      cursor: pointer;
+      &:hover {filter: brightness(80%) saturate(150%);}
       &_hidden {
         visibility: hidden;
         opacity: 0;
         height: 0;
       }
       &_fullscreen {
-        width: 100%;
-        transform: translateZ(0);
+        grid-column: span 4;
+        transform: translateZ(0) scale(1.1);
+        &:hover {filter: none;}
       }
+
     }
   }
 }
