@@ -2,7 +2,7 @@
     i.event__hide
     .event__heading
         i.event__icon(class=`icon__${event.icon}`)
-        p.event__title= event.title
+        .event__title(title=`${event.title}`)= event.title
     .event__status
         .event__source= event.source
         .event__time= event.time
@@ -29,9 +29,9 @@
                     .music.data__music
                         img.music__albumcover(src=`${event.data.albumcover}`, alt='albumcover')
                         .music__track.track
-                            .track__description= event.data.artist + ' - '  + event.data.track.name
+                            label.track__description(for='track')= event.data.artist + ' - '  + event.data.track.name
                             .track__body
-                                input.track__input(type='range', min='0', max='24000', step='1', value='0')
+                                input.track__input(type='range', min='0', max='24000', step='1', value='0', name='track' id='track')
                                 .track__length= event.data.track.length
                         .music__nav.m-nav
                             button.m-nav__prev

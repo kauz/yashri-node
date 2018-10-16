@@ -119,6 +119,12 @@
   &__title {
     @extend %arial-bold,
             %font_ubig;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
   &__status {
     padding: ($event-padding+15px) ($event-padding+5px) ($event-pr-pad+10%);
