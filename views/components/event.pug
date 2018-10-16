@@ -11,20 +11,23 @@
         if event.data
             .event__data
                 if event.data.image
-                    img.data__img.event__img(srcset=`/images/${event.data.image} 408w` + ', ' + `/images/${event.data.image.replace(/\.jpg$/, "@2x.jpg")} 1664w` + ', ' + `/images/${event.data.image.replace(/\.jpg$/, "@3x.jpg")} 2496w` sizes='(max - width: 768px) 408px, (max-width: 2560px) 1664px, 2496px' src=`/images/${event.data.image}`, alt=`${event.title}`)
+                    .event__img-container
+                        img.data__img.event__img(srcset=`/images/${event.data.image} 408w` + ', ' + `/images/${event.data.image.replace(/\.jpg$/, "@2x.jpg")} 1664w` + ', ' + `/images/${event.data.image.replace(/\.jpg$/, "@3x.jpg")} 2496w` sizes='(max - width: 768px) 408px, (max-width: 2560px) 1664px, 2496px' src=`/images/${event.data.image}`, alt=`${event.title}`, touch-action='none', draggable="false")
                 if event.icon === 'cam'
                     .data__items.data__items_cam
                         p.data__item
                             | Приближение:
-                            span.data__digit 100%
+                            span.data__digit
+                                span(id='zoom') 100%
                         p.data__item
                             | Яркость:
-                            span.data__digit 100%
+                            span.data__digit
+                                span(id='brightness') 100%
                 if event.data.type === 'graph'
-                    img.data__img.event__img(src='/images/graph.svg', alt=`${event.title}`)
+                    img.event__img(src='/images/graph.svg', alt=`${event.title}`)
                 if event.data.albumcover
                     .music.data__music
-                        img.data__img.music__albumcover(src=`${event.data.albumcover}`, alt='albumcover')
+                        img.music__albumcover(src=`${event.data.albumcover}`, alt='albumcover')
                         .music__track.track
                             .track__description= event.data.artist + ' - '  + event.data.track.name
                             .track__body

@@ -174,14 +174,35 @@
       align-items: flex-end;
     }
   }
+  .event__img-container {
+    @extend %posr;
+    width: 100%;
+    overflow: hidden;
+    min-height: 270px;
+    @media screen and (min-width: $mobile-l + 1) {
+      min-height: 470px;
+    }
+    @media screen and (min-width: $laptop-l + 1) {
+      min-height: 600px;
+    }
+  }
   &__img {
     width: 100%;
     height: 100%;
+    touch-action: none;
+    border-radius: 20px;
     @media screen and (min-width: $laptop-l){
       height: auto;
     }
-    border-radius: 20px;
   }
+}
+
+.touch__img {
+  @extend %posa;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
 }
 
 

@@ -54,7 +54,7 @@ module.exports = (function() {
 
         if (evCache.length === 1) {
             tx += ev.movementX;
-            ev.target.style.backgroundPositionX = `${tx}px`;
+            ev.target.style.transform = `translate(${tx}px)`;
         } else if (evCache.length === 2) {
             // console.log(diffScale);
 
@@ -68,10 +68,10 @@ module.exports = (function() {
             } else {
                 scale += diffScale * 0.01;
                 ev.target.style.transform = `scale(${scale})`;
+                document.getElementById('zoom').innerText = (scale * 100).toFixed() + '%';
             }
         }
 
-        document.getElementById('percentage').innerText = (scale * 100).toFixed() + '%';
         // console.log(angle);
         // console.log(`angle: ${angle}`);
         ev.preventDefault();
@@ -121,6 +121,8 @@ module.exports = (function() {
         },
 
         init: function(el) {
+
+            el.classList.add('touch__img');
 
             //if (ev.target.classList.contains('cam__img') && ev.pointerType === 'touch') {
                 // Install event handlers for the pointer target

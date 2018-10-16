@@ -5,7 +5,7 @@ let cctv = require('./cctv');
 let ui = new UI();
 
 
-let App = (function (ui, TouchCtrl) {
+let App = (function (ui, TouchCtrl, cctvCtrl) {
 
     let loadEventListeners = function () {
         // document.addEventListener('DOMContentLoaded', event.loadEvents);
@@ -13,7 +13,7 @@ let App = (function (ui, TouchCtrl) {
 
     return {
         init: function () {
-            let touchImg = document.querySelector('.event__img');
+            let touchImg = document.querySelector('.data__img');
             loadEventListeners();
             if (touchImg) {
                 TouchCtrl.init(touchImg);
@@ -21,7 +21,7 @@ let App = (function (ui, TouchCtrl) {
 
             // If video container exists - init videos
             if (document.querySelector(ui.selectors.videoContainer)) {
-                cctv.init();
+                cctvCtrl.init();
             }
 
 
@@ -29,7 +29,7 @@ let App = (function (ui, TouchCtrl) {
     }
 
 
-})(ui, touch);
+})(ui, touch, cctv);
 
 
 App.init();
