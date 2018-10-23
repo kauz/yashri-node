@@ -6,8 +6,13 @@ module.exports = {
 
     entry: {
         app: [
-            './public/javascripts/app.js',
+            './src/javascripts/app.ts',
         ]
+    },
+
+    resolve: {
+        // Add `.ts` and `.tsx` as a resolvable extension.
+        extensions: [".ts", ".tsx", ".js"]
     },
 
     output: {
@@ -21,7 +26,9 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: "babel-loader"
-            }
+            },
+
+            { test: /\.tsx?$/, loader: "ts-loader" }
         ]
     },
 

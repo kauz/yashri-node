@@ -1,4 +1,4 @@
-module.exports = (function () {
+module.exports = (function (): object {
 
     return {
 
@@ -9,15 +9,15 @@ module.exports = (function () {
             'video-3': {},
         },
 
-        analyze: function (video) {
+        analyze: function (video): object {
 
             let AudioContext = window.AudioContext || window.webkitAudioContext;
             let self = this,
-                context,
-                analyzer,
-                node,
-                bands,
-                source;
+                context: AudioContext,
+                analyzer: AnalyserNode,
+                node: ScriptProcessorNode,
+                bands: Uint8Array,
+                source: MediaElementAudioSourceNode;
 
             if (self.MediaElementAudioSourceNodes[video.id].context) {
                 context = self.MediaElementAudioSourceNodes[video.id].context;
@@ -73,13 +73,13 @@ module.exports = (function () {
         },
 
 
-        visualize: function (video) {
+        visualize: function (video): void {
 
             let nodes = this.MediaElementAudioSourceNodes;
 
             this.analyze(video);
 
-            let canvas = document.querySelector('.video__analyzer'),
+            let canvas: HTMLCanvasElement = document.querySelector('.video__analyzer'),
                 ctx = canvas.getContext('2d'),
                 analyzer = nodes[video.id].analyzer,
                 bufferLengthAlt = nodes[video.id].analyzer.frequencyBinCount,

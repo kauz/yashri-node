@@ -1,10 +1,10 @@
 let Hls = require('hls.js');
 let audioAnalyzer = require('./audio-analyzer');
 
-module.exports = (function () {
+module.exports = (function (): object {
 
 // Check for hls and start video
-    function initVideo(video, url) {
+    function initVideo(video: HTMLVideoElement, url: string): void {
         if (Hls.isSupported()) {
             let hls = new Hls();
             hls.loadSource(url);
@@ -20,8 +20,8 @@ module.exports = (function () {
         }
     }
 
-    function fullScreenVideo(e) {
-            let children = document.querySelector('.container_video').children;
+    function fullScreenVideo(e): void {
+            let children: HTMLCollection = document.querySelector('.container_video').children;
             if (e.target.classList.contains('video_fullscreen')) {
                 for (let i = 0; i < children.length; i++) {
                     if (children[i].classList.contains('container_video__item_hidden'))
@@ -46,10 +46,10 @@ module.exports = (function () {
             }
     }
 
-    function exitFullScreenVideo() {
-        let fscv = document.querySelector('.video_fullscreen');
+    function exitFullScreenVideo(): void {
+        let fscv: HTMLVideoElement = document.querySelector('.video_fullscreen');
         if (fscv) {
-            let children = document.querySelector('.container_video').children;
+            let children: HTMLCollection = document.querySelector('.container_video').children;
             for (let i = 0; i < children.length; i++) {
                 if (children[i].classList.contains('container_video__item_hidden'))
                     children[i].classList.remove('container_video__item_hidden');
@@ -61,37 +61,37 @@ module.exports = (function () {
         }
     }
 
-    function addFilter(e) {
-        let brightness = 1;
-        let contrast = 1;
-        let value = e.target.value;
-        let video = document.querySelector('.video_fullscreen');
+    function addFilter(e): void {
+        let brightness: number = 1;
+        let contrast: number = 1;
+        let value: string = e.target.value;
+        let video: HTMLVideoElement = document.querySelector('.video_fullscreen');
         if (!video.style.filter) {
             video.style.filter = `brightness(${brightness}) contrast(${contrast})`;
         }
         if (video) {
             if (e.target.classList.contains('video__input_brightness')) {
                 let reg = /contrast\([0-9]?\)/;
-                let filter = video.getAttribute('style');
-                let contrast = filter.match(reg)[0];
+                let filter: string = video.getAttribute('style');
+                let contrast: string = filter.match(reg)[0];
                 video.style.filter = `brightness(${value}) ${contrast}`;
             }
             else if (e.target.classList.contains('video__input_contrast')) {
                 let reg = /brightness\([0-9]?\)/;
-                let filter = video.getAttribute('style');
-                let brightness = filter.match(reg)[0];
+                let filter: string = video.getAttribute('style');
+                let brightness: string = filter.match(reg)[0];
                 video.style.filter = `${brightness} contrast(${value})`;
             }
         }
     }
 
-    function toggleMute(video) {
+    function toggleMute(video: HTMLVideoElement): void {
         video.muted = !video.muted;
     }
 
 
     return {
-        init: function () {
+        init: function (): void {
 
             let sources = ['http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fsosed%2Fmaster.m3u8',
                 'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fcat%2Fmaster.m3u8',
