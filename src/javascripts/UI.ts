@@ -1,7 +1,7 @@
 module.exports = class UI {
 
-    selectors : object = {
-        eventsContainer: document.querySelector('.events'),
+    selectors = {
+        eventsContainer: '.events',
         videoContainer: '.container_video',
         container: '.container',
         dataImg: '.data__img'

@@ -2,10 +2,9 @@ let UI = require('./UI');
 let touch = require('./TouchCtrl');
 let cctv = require('./cctv');
 
-let ui: object = new UI();
+let ui = new UI();
 
-
-let App = (function (ui: object, TouchCtrl: object, cctvCtrl: object): object {
+let App = (function (ui, TouchCtrl, cctvCtrl) {
 
     let loadEventListeners = function (): void {
         // document.addEventListener('DOMContentLoaded', event.loadEvents);
@@ -13,6 +12,7 @@ let App = (function (ui: object, TouchCtrl: object, cctvCtrl: object): object {
 
     return {
         init: function (): void {
+
             let touchImg: HTMLElement = document.querySelector(ui.selectors.dataImg);
             loadEventListeners();
 

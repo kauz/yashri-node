@@ -1,4 +1,4 @@
-module.exports = (function (): object {
+module.exports = (function () {
 
     return {
 
@@ -9,9 +9,9 @@ module.exports = (function (): object {
             'video-3': {},
         },
 
-        analyze: function (video): object {
+        analyze: function (video: HTMLVideoElement): object {
 
-            let AudioContext = window.AudioContext || window.webkitAudioContext;
+            // let AudioContext: AudioContext = window.AudioContext || window.webkitAudioContext;
             let self = this,
                 context: AudioContext,
                 analyzer: AnalyserNode,
@@ -57,15 +57,15 @@ module.exports = (function (): object {
             self.MediaElementAudioSourceNodes[video.id].bands = bands;
 
             // Listen to input data change
-            node.onaudioprocess = function () {
+            node.onaudioprocess = function (): Uint8Array | number {
                 analyzer.getByteFrequencyData(bands);
+                let returnValue = 0;
                 if (!video.paused) {
                     if (typeof self.update === 'function') {
-                        return self.update(bands);
-                    } else {
-                        return 0;
+                        returnValue = self.update(bands);
                     }
                 }
+                return returnValue
             };
 
             console.log(this);
@@ -73,17 +73,20 @@ module.exports = (function (): object {
         },
 
 
-        visualize: function (video): void {
+        visualize: function (video: HTMLVideoElement): void {
 
             let nodes = this.MediaElementAudioSourceNodes;
 
             this.analyze(video);
 
-            let canvas: HTMLCanvasElement = document.querySelector('.video__analyzer'),
-                ctx = canvas.getContext('2d'),
-                analyzer = nodes[video.id].analyzer,
-                bufferLengthAlt = nodes[video.id].analyzer.frequencyBinCount,
-                bands = nodes[video.id].bands;
+            let canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, analyzer: AnalyserNode,
+                bufferLengthAlt: number, bands: Uint8Array;
+
+            canvas = document.querySelector('.video__analyzer');
+            ctx = canvas.getContext('2d');
+            analyzer = nodes[video.id].analyzer;
+            bufferLengthAlt = nodes[video.id].analyzer.frequencyBinCount;
+            bands = nodes[video.id].bands;
 
             let {width: WIDTH, height: HEIGHT} = canvas;
 
@@ -98,9 +101,9 @@ module.exports = (function (): object {
                 ctx.fillStyle = 'rgb(255, 255, 255)';
                 ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-                let barHeight,
-                    barWidth = (WIDTH / bufferLengthAlt) * 4,
-                    x = 0;
+                let barHeight: number,
+                    barWidth: number = (WIDTH / bufferLengthAlt) * 4,
+                    x: number = 0;
 
                 for (let i = 0; i < bufferLengthAlt; i++) {
                     barHeight = bands[i];

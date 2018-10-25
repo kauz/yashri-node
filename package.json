@@ -10,6 +10,7 @@
     "start": "NODE_ENV='production' node ./bin/www"
   },
   "dependencies": {
+    "@types/hls.js": "^0.10.2",
     "@types/node": "^10.12.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",

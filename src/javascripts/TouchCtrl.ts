@@ -1,7 +1,7 @@
 module.exports = (function (): object {
 
-    let evCache = [];
-    let evCachePDown = [];
+    let evCache: PointerEvent[] = [];
+    let evCachePDown: PointerEvent[] = [];
     let prevDiff: number = -1;
     let isRotation: boolean = false;
 
@@ -9,7 +9,7 @@ module.exports = (function (): object {
     let tx: number = 0;
     let scale: number = 1;
 
-    let pointerdownHandler: (ev) => void = function (ev) {
+    let pointerdownHandler: (ev: PointerEvent) => void = function (ev) {
         // console.log('down', ev)
         // The pointerdown event signals the start of a touch interaction.
         // This event is cached to support 2-finger gestures
@@ -22,14 +22,15 @@ module.exports = (function (): object {
     };
 
 
-    let pointermoveHandler: (ev) => void = function (ev) {
+    let pointermoveHandler: (ev: PointerEvent) => void = function (ev) {
         // console.log('move', ev);
         // console.log(evCachePDown[0]);
         let diffScale = 0;
         let diffAngle = 0;
+        let locEl = ev.target as HTMLElement;
 
         // Find this event in the cache and update its record with this event
-        for (var i = 0; i < evCache.length; i++) {
+        for (let i = 0; i < evCache.length; i++) {
             if (ev.pointerId === evCache[i].pointerId) {
                 if (evCache.length >= 2) {
                     let prevI = i === 0 ? 1 : 0;
@@ -55,7 +56,7 @@ module.exports = (function (): object {
 
         if (evCache.length === 1) {
             tx += ev.movementX;
-            ev.target.style.transform = `translate(${tx}px)`;
+            locEl.style.transform = `translate(${tx}px)`;
         } else if (evCache.length === 2) {
             // console.log(diffScale);
 
@@ -63,13 +64,19 @@ module.exports = (function (): object {
             if (isRotation) {
                 angle += diffAngle;
                 angle = Math.min(Math.max(-90, angle), 90);
-                ev.target.style.filter = `brightness(${(angle + 90) / 180})`;
-                document.getElementById('brightness').innerText = ((angle + 90) / 180 * 100).toFixed() + '%';
+                locEl.style.filter = `brightness(${(angle + 90) / 180})`;
+                let brightness = document.getElementById('brightness');
+                if (brightness) {
+                    brightness.innerText = ((angle + 90) / 180 * 100).toFixed() + '%';
+                }
 
             } else {
                 scale += diffScale * 0.01;
-                ev.target.style.transform = `scale(${scale})`;
-                document.getElementById('zoom').innerText = (scale * 100).toFixed() + '%';
+                locEl.style.transform = `scale(${scale})`;
+                let zoom = document.getElementById('zoom');
+                if (zoom) {
+                    zoom.innerText = (scale * 100).toFixed() + '%';
+                }
             }
         }
 
@@ -79,7 +86,7 @@ module.exports = (function (): object {
     };
 
 
-    let pointerupHandler = function (ev) {
+    let pointerupHandler = function (ev: PointerEvent) {
         removeEvent(ev);
 
 
@@ -89,9 +96,9 @@ module.exports = (function (): object {
     };
 
 
-    function removeEvent(ev) {
+    function removeEvent(ev: PointerEvent) {
         // Remove this event from the target's cache
-        for (var i = 0; i < evCache.length; i++) {
+        for (let i = 0; i < evCache.length; i++) {
             if (evCache[i].pointerId === ev.pointerId) {
                 evCache.splice(i, 1);
                 evCachePDown.splice(i, 1);
@@ -100,20 +107,20 @@ module.exports = (function (): object {
         }
     }
 
-    function calcEventDistace(ev, ev2) {
+    function calcEventDistace(ev: PointerEvent, ev2: PointerEvent) {
         let dx = (ev.clientX - ev2.clientX);
         let dy = (ev.clientY - ev2.clientY);
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-    function calcEventAngle(ev, ev2) {
+    function calcEventAngle(ev: PointerEvent, ev2: PointerEvent) {
         return Math.acos((ev2.clientX - ev.clientX) / (calcEventDistace(ev, ev2))) / Math.PI * 180;
     }
 
     // Public methods
     return {
 
-        init: function (el): void {
+        init: function (el: HTMLElement): void {
 
             el.classList.add('touch__img');
 
