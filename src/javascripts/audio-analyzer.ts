@@ -1,3 +1,7 @@
+export interface SourceNodes {
+    'video-0': object;
+}
+
 module.exports = (function () {
 
     return {
@@ -6,7 +10,7 @@ module.exports = (function () {
             'video-0': {},
             'video-1': {},
             'video-2': {},
-            'video-3': {},
+            'video-3': {}
         },
 
         analyze: function (video: HTMLVideoElement): object {
@@ -79,43 +83,42 @@ module.exports = (function () {
 
             this.analyze(video);
 
-            let canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, analyzer: AnalyserNode,
-                bufferLengthAlt: number, bands: Uint8Array;
-
-            canvas = document.querySelector('.video__analyzer');
-            ctx = canvas.getContext('2d');
-            analyzer = nodes[video.id].analyzer;
-            bufferLengthAlt = nodes[video.id].analyzer.frequencyBinCount;
-            bands = nodes[video.id].bands;
-
+            let canvas = <HTMLCanvasElement> document.querySelector('.video__analyzer');
+            let ctx = canvas.getContext('2d');
             let {width: WIDTH, height: HEIGHT} = canvas;
+            let analyzer: AnalyserNode = nodes[video.id].analyzer;
+            let bufferLengthAlt: number = nodes[video.id].analyzer.frequencyBinCount;
+            let bands: Uint8Array = nodes[video.id].bands;
 
-
-            ctx.clearRect(0, 0, WIDTH, HEIGHT);
+            if (ctx) {
+                ctx.clearRect(0, 0, WIDTH, HEIGHT);
+                drawBars();
+            }
 
             function drawBars() {
                 requestAnimationFrame(drawBars);
 
                 analyzer.getByteFrequencyData(bands);
+                if (ctx) {
+                    ctx.fillStyle = 'rgb(255, 255, 255)';
+                    ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-                ctx.fillStyle = 'rgb(255, 255, 255)';
-                ctx.fillRect(0, 0, WIDTH, HEIGHT);
+                    let barHeight: number,
+                        barWidth: number = (WIDTH / bufferLengthAlt) * 4,
+                        x: number = 0;
 
-                let barHeight: number,
-                    barWidth: number = (WIDTH / bufferLengthAlt) * 4,
-                    x: number = 0;
+                    for (let i = 0; i < bufferLengthAlt; i++) {
+                        barHeight = bands[i];
 
-                for (let i = 0; i < bufferLengthAlt; i++) {
-                    barHeight = bands[i];
+                        ctx.fillStyle = `rgb(${barHeight},${barWidth},${barWidth})`;
+                        ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
 
-                    ctx.fillStyle = `rgb(${barHeight},${barWidth},${barWidth})`;
-                    ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
-
-                    x += barWidth + 2;
+                        x += barWidth + 2;
+                    }
                 }
+
             }
 
-            drawBars();
         }
 
 

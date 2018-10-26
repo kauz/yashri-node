@@ -1,3 +1,5 @@
+import {Response, Request, NextFunction} from "express";
+
 let createError = require('http-errors'),
     express = require('express'),
     path = require('path'),
@@ -35,12 +37,12 @@ app.use('/cctv', cctvRouter);
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function(req: Request, res: Response, next: NextFunction) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err: any, req: Request, res: Response) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
