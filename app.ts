@@ -1,4 +1,4 @@
-import {Response, Request, NextFunction} from "express";
+import {Response, Request, NextFunction, Application} from "express";
 
 let createError = require('http-errors'),
     express = require('express'),
@@ -12,7 +12,7 @@ let indexRouter = require('./routes/index'),
     cctvRouter = require('./routes/cctv'),
     apiRouter = require('./routes/api');
 
-let app = express();
+let app: Application = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -15,7 +15,7 @@ module.exports = (function () {
 
         analyze: function (video: HTMLVideoElement): object {
 
-            // let AudioContext: AudioContext = window.AudioContext || window.webkitAudioContext;
+            let AudioContext = window.AudioContext || window.webkitAudioContext;
             let self = this,
                 context: AudioContext,
                 analyzer: AnalyserNode,
