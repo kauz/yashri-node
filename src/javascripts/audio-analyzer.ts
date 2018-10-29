@@ -1,5 +1,5 @@
-export interface SourceNodes {
-    'video-0': object;
+export interface MediaElementAudioSourceNodes {
+    [key: string]: object;
 }
 
 module.exports = (function () {
@@ -16,7 +16,7 @@ module.exports = (function () {
         analyze: function (video: HTMLVideoElement): object {
 
             let AudioContext = window.AudioContext || window.webkitAudioContext;
-            let self = this,
+            let self = this as any,
                 context: AudioContext,
                 analyzer: AnalyserNode,
                 node: ScriptProcessorNode,
@@ -79,7 +79,7 @@ module.exports = (function () {
 
         visualize: function (video: HTMLVideoElement): void {
 
-            let nodes = this.MediaElementAudioSourceNodes;
+            let nodes = this.MediaElementAudioSourceNodes as any;
 
             this.analyze(video);
 

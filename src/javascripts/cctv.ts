@@ -33,7 +33,11 @@ module.exports = (function (): object {
     }
 
     function fullScreenVideo(e: HTMLElementEvent<HTMLVideoElement>): void {
-        let children: HTMLCollection = document.querySelector('.container_video').children;
+        let container: HTMLElement | null = document.querySelector('.container_video');
+        // @ts-ignore
+        let children: HTMLCollection = container.children;
+        let videoControls: HTMLElement | null = document.querySelector('.video__controls');
+
         if (e.target.classList.contains('video_fullscreen')) {
             for (let i = 0; i < children.length; i++) {
                 if (children[i].classList.contains('container_video__item_hidden'))
@@ -45,7 +49,8 @@ module.exports = (function (): object {
                     e.target.parentElement.classList.remove('container_video__item_fullscreen');
                 }
             e.target.style.filter = `brightness(1) contrast(1)`;
-            document.querySelector('.video__controls').classList.add('video__controls_hidden');
+                if (videoControls)
+                    videoControls.classList.add('video__controls_hidden');
         } else {
             toggleMute(e.target);
             audioAnalyzer.visualize(e.target);
@@ -58,22 +63,28 @@ module.exports = (function (): object {
                 e.target.parentElement.classList.add('container_video__item_fullscreen');
             }
             e.target.classList.add('video_fullscreen');
-            document.querySelector('.video__controls').classList.remove('video__controls_hidden');
+            if (videoControls)
+                videoControls.classList.remove('video__controls_hidden');
         }
     }
 
     function exitFullScreenVideo(): void {
-        let fscv: HTMLVideoElement = document.querySelector('.video_fullscreen');
+        let fscv: HTMLVideoElement | null = document.querySelector('.video_fullscreen');
+        // @ts-ignore
+        let children: HTMLCollection = document.querySelector('.container_video').children;
+        let videoControls: HTMLElement | null = document.querySelector('.video__controls');
+
         if (fscv) {
-            let children: HTMLCollection = document.querySelector('.container_video').children;
             for (let i = 0; i < children.length; i++) {
                 if (children[i].classList.contains('container_video__item_hidden'))
                     children[i].classList.remove('container_video__item_hidden');
             }
             fscv.classList.remove('video_fullscreen');
-            fscv.parentElement.classList.remove('container_video__item_fullscreen');
+            if (fscv.parentElement)
+                fscv.parentElement.classList.remove('container_video__item_fullscreen');
             toggleMute(fscv);
-            document.querySelector('.video__controls').classList.add('video__controls_hidden');
+            if (videoControls)
+                videoControls.classList.add('video__controls_hidden');
         }
     }
 
@@ -81,20 +92,24 @@ module.exports = (function (): object {
         let brightness: number = 1;
         let contrast: number = 1;
         let value: string = e.target.value;
-        let video: HTMLVideoElement = document.querySelector('.video_fullscreen');
-        if (!video.style.filter) {
+        let video: HTMLVideoElement | null = document.querySelector('.video_fullscreen');
+        if (video && !video.style.filter) {
             video.style.filter = `brightness(${brightness}) contrast(${contrast})`;
         }
         if (video) {
             if (e.target.classList.contains('video__input_brightness')) {
                 let reg = /contrast\([0-9]?\)/;
+                // @ts-ignore
                 let filter: string = video.getAttribute('style');
+                // @ts-ignore
                 let contrast: string = filter.match(reg)[0];
                 video.style.filter = `brightness(${value}) ${contrast}`;
             }
             else if (e.target.classList.contains('video__input_contrast')) {
                 let reg = /brightness\([0-9]?\)/;
+                // @ts-ignore
                 let filter: string = video.getAttribute('style');
+                // @ts-ignore
                 let brightness: string = filter.match(reg)[0];
                 video.style.filter = `${brightness} contrast(${value})`;
             }
@@ -122,14 +137,24 @@ module.exports = (function (): object {
             let videos: NodeList = document.querySelectorAll('video');
             videos.forEach((video: Node, i: number) => {
                 initVideo(<HTMLVideoElement> document.getElementById(`video-${i}`), sources[i]);
+                // @ts-ignore
                 video.addEventListener('click', (e: HTMLElementEvent<HTMLVideoElement>) => {
                     fullScreenVideo(e);
                 });
             });
 
-            document.querySelector('.video__input_brightness').addEventListener('input', addFilter);
-            document.querySelector('.video__input_contrast').addEventListener('input', addFilter);
-            document.querySelector('.video__button_efs').addEventListener('click', exitFullScreenVideo);
+            let brightness: HTMLInputElement | null = document.querySelector('.video__input_brightness');
+            let contrast: HTMLInputElement | null = document.querySelector('.video__input_contrast');
+            let efs: HTMLButtonElement | null = document.querySelector('.video__button_efs');
+
+            if (brightness && contrast && efs) {
+                // @ts-ignore
+                brightness.addEventListener('input', addFilter);
+                // @ts-ignore
+                contrast.addEventListener('input', addFilter);
+                efs.addEventListener('click', exitFullScreenVideo);
+            }
+
         }
     };
 
