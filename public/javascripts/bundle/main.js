@@ -86,6 +86,30 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/dumb-flux/lib/Dispatcher.js":
+/*!**************************************************!*\
+  !*** ./node_modules/dumb-flux/lib/Dispatcher.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Dispatcher; });\n/**\n * @module Dispatcher\n */\nclass Dispatcher {\n\n    /**\n     *\n     * @param {object} store - an object of Store class\n     */\n    constructor(store) {\n        this.store = store;\n    }\n\n    /**\n     *\n     * @param {string} actionType\n     * @param data\n     */\n    dispatch( actionType, data ) {\n            this.store.onAction(actionType, data);\n    }\n\n}\n\n\n//# sourceURL=webpack:///./node_modules/dumb-flux/lib/Dispatcher.js?");
+
+/***/ }),
+
+/***/ "./node_modules/dumb-flux/lib/Store.js":
+/*!*********************************************!*\
+  !*** ./node_modules/dumb-flux/lib/Store.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Store; });\n/**\n * @module Store\n */\nclass Store {\n\n    /**\n     *\n     * @param {array} subscribers - list of elements subscribed for Store's changes\n     */\n    constructor(subscribers) {\n        this.state = Boolean(localStorage.getItem('state')) ? localStorage.getItem('state') : {};\n        this.subscribers = subscribers;\n    }\n\n    /**\n     *\n     * @param {object} newState - stored data\n     */\n    changeState (newState) {\n        this.state = newState;\n        localStorage.setItem('state', JSON.stringify(this.state));\n    };\n\n    /**\n     *\n     * @param {string} actionType\n     * @param data\n     */\n    onAction ( actionType, data,  ) {\n\n        let stored = {};\n        stored[actionType] = data;\n\n        this.changeState(stored);\n        this.onChange(actionType, data)\n    };\n\n    /**\n     *\n     * @param {string} actionType - event type\n     * @param change - data passed to subscriber\n     */\n    onChange (actionType, change) {\n        let e = new CustomEvent(actionType, { 'detail': change });\n        this.subscribers.forEach((sub) => {\n            sub.dispatchEvent(e);\n        });\n    }\n\n}\n\n\n//# sourceURL=webpack:///./node_modules/dumb-flux/lib/Store.js?");
+
+/***/ }),
+
 /***/ "./node_modules/hls.js/dist/hls.js":
 /*!*****************************************!*\
   !*** ./node_modules/hls.js/dist/hls.js ***!
@@ -123,10 +147,11 @@ eval("function _classCallCheck(instance, Constructor) { if (!(instance instanceo
 /*!***********************************!*\
   !*** ./public/javascripts/app.js ***!
   \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("var UI = __webpack_require__(/*! ./UI */ \"./public/javascripts/UI.js\");\n\nvar touch = __webpack_require__(/*! ./TouchCtrl */ \"./public/javascripts/TouchCtrl.js\");\n\nvar cctv = __webpack_require__(/*! ./cctv */ \"./public/javascripts/cctv.js\");\n\nvar ui = new UI();\n\nvar App = function (ui, TouchCtrl, cctvCtrl) {\n  var loadEventListeners = function loadEventListeners() {// document.addEventListener('DOMContentLoaded', event.loadEvents);\n  };\n\n  return {\n    init: function init() {\n      var touchImg = document.querySelector('.data__img');\n      loadEventListeners();\n\n      if (touchImg) {\n        TouchCtrl.init(touchImg);\n      } // If video container exists - init videos\n\n\n      if (document.querySelector(ui.selectors.videoContainer)) {\n        cctvCtrl.init();\n      }\n    }\n  };\n}(ui, touch, cctv);\n\nApp.init();\n\n//# sourceURL=webpack:///./public/javascripts/app.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var dumb_flux_lib_Store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dumb-flux/lib/Store */ \"./node_modules/dumb-flux/lib/Store.js\");\n/* harmony import */ var dumb_flux_lib_Dispatcher__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! dumb-flux/lib/Dispatcher */ \"./node_modules/dumb-flux/lib/Dispatcher.js\");\nvar UI = __webpack_require__(/*! ./UI */ \"./public/javascripts/UI.js\");\n\nvar touch = __webpack_require__(/*! ./TouchCtrl */ \"./public/javascripts/TouchCtrl.js\");\n\nvar cctv = __webpack_require__(/*! ./cctv */ \"./public/javascripts/cctv.js\");\n\n\n\nvar ui = new UI();\n\nvar App = function (ui, TouchCtrl, cctvCtrl) {\n  var emitter = document;\n  var listener = document;\n  var store = new dumb_flux_lib_Store__WEBPACK_IMPORTED_MODULE_0__[\"default\"]([listener]);\n  var dispatcher = new dumb_flux_lib_Dispatcher__WEBPACK_IMPORTED_MODULE_1__[\"default\"](store);\n\n  var loadEventListeners = function loadEventListeners() {\n    // document.addEventListener('DOMContentLoaded', event.loadEvents);\n    emitter.addEventListener('click', listenForClick);\n    listener.addEventListener('switch-page', reRender);\n  };\n\n  function listenForClick(e) {\n    if (e.target.classList.contains('nav__link')) {\n      dispatcher.dispatch('switch-page', {\n        name: e.target.textContent\n      });\n    }\n  }\n\n  function reRender(e) {\n    e.preventDefault();\n\n    switch (e.detail.name) {\n      case \"Сводка\":\n        document.location.href = '/';\n        break;\n\n      case \"Видеонаблюдение\":\n        document.location.href = '/cctv';\n        break;\n\n      default:\n        break;\n    }\n  }\n\n  return {\n    init: function init() {\n      var touchImg = document.querySelector('.data__img');\n      loadEventListeners();\n\n      if (touchImg) {\n        TouchCtrl.init(touchImg);\n      } // If video container exists - init videos\n\n\n      if (document.querySelector(ui.selectors.videoContainer)) {\n        cctvCtrl.init();\n      }\n    }\n  };\n}(ui, touch, cctv);\n\nApp.init();\n\n//# sourceURL=webpack:///./public/javascripts/app.js?");
 
 /***/ }),
 
